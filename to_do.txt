@@ -1,0 +1,12 @@
+Nel pomeriggio: eseguire per tutti gli altri job mapper e reducer , spark e spark sql
+
+
+
+comando spark:
+/spark/bin/spark-submit     
+/tmp/script_spark_job_1.py 
+--input_path hdfs://namenode:9000/input/input_mr_job_1/input_mr_job_1_100k.csv  --output_path hdfs://namenode:9000/output/job1/risultati_job_1_100k.csv
+
+comando sql:
+
+comando map reduce:
