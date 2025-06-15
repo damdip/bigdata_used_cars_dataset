@@ -1,0 +1,4 @@
+{"make_name":"Jeep","models":[{"model_name":"Renegade","car_count":1,"min_price":23141.0,"max_price":23141.0,"avg_price":23141.0,"years_present":[2019]}]}
+{"make_name":"Land Rover","models":[{"model_name":"Discovery","car_count":1,"min_price":67430.0,"max_price":67430.0,"avg_price":67430.0,"years_present":[2020]},{"model_name":"Range Rover Velar","car_count":2,"min_price":66903.0,"max_price":68520.0,"avg_price":67711.5,"years_present":[2020]},{"model_name":"Discovery Sport","car_count":3,"min_price":46500.0,"max_price":51245.0,"avg_price":48875.0,"years_present":[2020]}]}
+{"make_name":"Mazda","models":[{"model_name":"MAZDA3","car_count":1,"min_price":23695.0,"max_price":23695.0,"avg_price":23695.0,"years_present":[2019]}]}
+{"make_name":"Subaru","models":[{"model_name":"WRX STI","car_count":1,"min_price":46995.0,"max_price":46995.0,"avg_price":46995.0,"years_present":[2016]}]}

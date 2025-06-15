@@ -1,0 +1,25 @@
+comando spark:
+/spark/bin/spark-submit     
+/tmp/script_spark_job_1.py 
+--input_path hdfs://namenode:9000/input/input_mr_job_1/input_mr_job_1_100k.csv  --output_path hdfs://namenode:9000/output/job1/risultati_job_1_100k.csv
+
+
+
+comando map reduce:
+
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming*.jar  -input /input   -output /output_w2   -mapper /home/dips/bd/proogetto_comune -reducer /home/dips/bd/proogetto_comune
+
+
+
+./hadoop_timer.sh " hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming*.jar  -D mapreduce.reduce.shuffle.input.buffer.percent=0.6 -D mapreduce.reduce.shuffle.memory.limit.percent=0.5 -D mapreduce.reduce.memory.mb=4096 -input /input/input_mr_job_2/dataset_job2_1M.csv   -output /output/job2_mapreduce/output_1M   -mapper /home/dips/bd/progetto_comune/job_2/mapreduce/mapper.py -reducer /home/dips/bd/progetto_comune/job_2/mapreduce/reducer.py "
+
+
+
+
+
+comando spark aws: 
+
+"spark-submit --master yarn --deploy-mode cluster  ~/spark_aws/spark/spark_1.py --input_path hdfs:///input/dataset_job_1/input_mr_job_1_1k.csv  --output_path hdfs:///output/job1_spark/output_1k"
+
+
+Portare i risultati su vscode, aggiornare git e cominciare la relazione
