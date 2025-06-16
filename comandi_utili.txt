@@ -16,10 +16,14 @@ hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming*.jar  -input /in
 
 
 
-
 comando spark aws: 
 
 "spark-submit --master yarn --deploy-mode cluster  ~/spark_aws/spark/spark_1.py --input_path hdfs:///input/dataset_job_1/input_mr_job_1_1k.csv  --output_path hdfs:///output/job1_spark/output_1k"
 
 
-Portare i risultati su vscode, aggiornare git e cominciare la relazione
+
+comando spark:
+/spark/bin/spark-submit     
+/tmp/script_spark_job_1.py 
+--input_path hdfs://namenode:9000/input/input_mr_job_1/input_mr_job_1_100k.csv  --output_path hdfs://namenode:9000/output/job1/risultati_job_1_100k.csv
+

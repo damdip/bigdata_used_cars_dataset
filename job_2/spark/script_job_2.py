@@ -86,15 +86,33 @@ rdd_agg = rdd_parsed.aggregateByKey(zero, seq_func, comb_func)
 
 agg_count = rdd_agg.count()
 print(f"[DEBUG] Numero gruppi aggregati: {agg_count}", file=sys.stderr)
+stopwords = set([
+            "the", "and", "for", "with", "that", "this", "you", "your", "from", "are",
+        "was", "have", "has", "but", "not", "all", "can", "will", "more", "one",
+        "our", "any", "its", "new", "low", "high", "top", "out", "get", "own", "off"
+       
+    ])
 
 # === Calcolo top 3 parole ===
-def compute_top3_words(descriptions):
+import re
+from collections import Counter
+
+def compute_top3_words(desc_list, min_word_length=4):
+    
+    stopwords = {
+        "the", "and", "for", "with", "that", "this", "you", "your", "from", "are",
+        "was", "have", "has", "but", "not", "all", "can", "will", "more", "one",
+        "our", "any", "its", "new", "low", "high", "top", "out", "get", "own", "off"
+    }
+
     words = []
-    for desc in descriptions:
-        tokens = [w.strip().lower() for w in desc.split(",") if w.strip()]
-        words.extend(tokens)
+    for desc in desc_list:
+        tokens = re.findall(r'\b[a-z]+\b', desc.lower())
+        filtered = [w for w in tokens if w not in stopwords and len(w) >= 4]
+        words.extend(filtered)
+
     counter = Counter(words)
-    top3 = [w for w, _ in counter.most_common(3)]
+    top3 = [word for word, _ in counter.most_common(3)]
     return top3
 
 # === Format finale ===
@@ -106,6 +124,7 @@ def format_output(record):
     top3_str = ",".join(top3_words)
     return f"{city},{year},{fascia},{num_modelli},{num_auto},{media_days:.2f},{top3_str}"
 
+
 rdd_result = rdd_agg.map(format_output)
 
 # === Conteggio finale dei record ===
@@ -113,22 +132,6 @@ output_count = rdd_result.count()
 
 # === Salvataggio su HDFS ===
 rdd_result.saveAsTextFile(output_filepath)
-
-# === Salvataggio log su HDFS ===
-log_lines = [
-    f"[DEBUG] Numero righe originali: {original_count}",
-    f"[DEBUG] Righe parse ok: {parsed_count}",
-    f"[DEBUG] Numero gruppi aggregati: {agg_count}",
-    f"[RESULT] Numero record finali: {output_count}",
-    f"[TIMER] Tempo totale: {time.time() - start_time:.2f} secondi"
-]
-
-log_rdd = sc.parallelize(log_lines)
-log_rdd.saveAsTextFile(output_filepath + "_logs")
-
-# === Debug finale ===
-print(f"[RESULT] Numero record finali: {output_count}", file=sys.stderr)
-print(f"[TIMER] Tempo totale: {time.time() - start_time:.2f} secondi", file=sys.stderr)
 
 # === Stop ===
 spark.stop()

@@ -7,9 +7,6 @@ from pyspark.sql.utils import StreamingQueryException
 # Listener per ottenere metriche
 from pyspark import TaskContext
 
-import time
-
-start_time = time.time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_path", type=str, help="Input file path")
@@ -74,12 +71,5 @@ result_rdd = aggregated_rdd.map(format_result)
 # Salva su HDFS
 result_rdd.saveAsTextFile(output_filepath)
 
-end_time = time.time()
-print("----------------------------------------------------------")
-print("                                                          ")
-print(f"Tempo totale di esecuzione (sec): {end_time - start_time}")
-print("                                                          ")
-print("----------------------------------------------------------")
 
-# puoi anche stampare numero di record elaborati
 print(f"Numero record risultato: {result_rdd.count()}")

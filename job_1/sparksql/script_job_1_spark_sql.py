@@ -1,5 +1,4 @@
 #!usr/bin/env python3
-import time
 import argparse
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import collect_set, collect_list, count, min, max, avg, struct, round as spark_round
@@ -10,7 +9,6 @@ def main(input_path, output_path, output_format):
         .appName("AutoStatsByMakeAndModel") \
         .getOrCreate()
     
-    start_time = time.time()  # inizio misurazione
 
     # 2. Leggi il dataset (presunto CSV con intestazioni)
     df = spark.read.option("header", "true").option("inferSchema", "true").csv(input_path)
@@ -42,14 +40,6 @@ def main(input_path, output_path, output_format):
 
     # 6. Scrittura dell'output nel formato specificato
     result_df.write.mode("overwrite").format(output_format).save(output_path)
-
-
-    end_time = time.time()  # fine misurazione
-    print("------------------------------------------------")
-    print("                                                ")
-    print(f"Job finished in {end_time - start_time:.2f} seconds")
-    print("                                                ")
-    print("------------------------------------------------")
 
     
     # 7. Chiudi la sessione
